@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curise Booking</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!--Header and Menu Section-->
+    <header class="container">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a class="active" href="#">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--Booking Section-->
+    <main id="form-area" class="main-content container">
+
+        <div class="booking-content">
+            <h1>Cruise Queen</h1>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book./p>
+        </div>
+
+        <div class="booking-form">
+            <h3>Book Ocean Time</h3>
+            <div class="input-group">
+                <label for="">Flying From</label>
+                <input class="inp-style" type="text" name="" placeholder="Dhaka, Bangladesh">
+            </div>
+            <div class="input-group">
+                <label for="">Flying To</label>
+                <input class="inp-style" type="text" name="" placeholder="New York, United States">
+            </div>
+            <div class="inputs">
+                <div class="input-group">
+                    <label" for="">Departure</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+                <div class="input-group">
+                    <label for="">Return</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+            </div>
+
+            <!-- First Class -->
+            <div class="input-group f-class">
+                <div>
+                    <label for="">First Class ($150)</label>
+                    <input id="firstClass-input" class="inp-style inp-width" type="number" value="0">
+                </div>
+                <div class="plus-minus-btn">
+                    <button id="firstClass-increase" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                    <button id="firstClass-decrease" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                    <!-- <p>+ -</p> -->
+                </div>
+            </div>
+
+            <!-- Economy Class -->
+            <div class="input-group f-class">
+                <div>
+                    <label for="">Economy ($100)</label>
+                    <input id="economyClass-input" class="inp-style inp-width" type="number" value="0">
+                </div>
+                <div class="plus-minus-btn">
+                    <button id="economyClass-increase" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                    <button id="economyClass-decrease" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                    <!-- <p> <span>+</span> <span>-</span> </p> -->
+                </div>
+            </div>
+            <div class="calculations">
+                <div class="amount">
+                    <div class="left">
+                        <p>Subtotal</p>
+                    </div>
+                    <div class="right">
+                        <p id="subtotal-amount">$0</p>
+                    </div>
+                </div>
+
+                <div class="amount">
+                    <div class="left">
+                        <p>Charge 10% VAT</p>
+                    </div>
+                    <div class="right">
+                        <p id="vat-amount">$0</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="amount">
+                    <div class="left">
+                        <h4>Total</h4>
+                    </div>
+                    <div class="right">
+                        <p id="total-amount">$0</p>
+                    </div>
+                </div>
+            </div>
+            <button id="book-button" class="btn-style">Book Now</button>
+        </div>
+    </main>
+
+    <div id="book-area">
+        <div class="card">
+            <br>
+            <h1>Book Completed</h1>
+            <br>
+            <p>Your First Class Sit</p>
+            <h6 id="first-sit"></h6>
+            <p>Your Economic Class Sit</p>
+            <h6 id="economic-sit"></h6>
+            <br>
+            <h3>Your Total Payment</h3>
+            <h1 id="total-payment"></h1>
+            <br>
+            <p>Thank You</p>
+        </div>
+    </div>
+    <!--Thank You-->
+
+    <!-- JavaScript Final Code Start -->
+    <script>
+        // Economy Class Increase Button
+        document.getElementById('economyClass-increase').addEventListener('click', function(){
+            economyClassChange(true);
+        })
+        // Economy Class Decrease Button
+        document.getElementById('economyClass-decrease').addEventListener('click', function(){
+            economyClassChange(false);
+        })
+        // Economy Class Function Call
+        function economyClassChange(isIncrease){
+            const economyClassInput = document.getElementById('economyClass-input');
+            const economyClassCount = parseInt(economyClassInput.value);
+            let economyClassNewCount = economyClassCount;
+            if(isIncrease == true){
+                economyClassNewCount = economyClassCount + 1;
+            }
+            if(isIncrease == false && economyClassCount > 0){
+                economyClassNewCount = economyClassCount - 1;
+            }
+            economyClassInput.value = economyClassNewCount;
+            calculateTotalAmount();
+        }
+        // First Class Increase Button
+        document.getElementById('firstClass-increase').addEventListener('click', function(){
+            firstClassChange(true);
+           
+        })
+        // First Class Decrease Button
+        document.getElementById('firstClass-decrease').addEventListener('click', function(){
+            firstClassChange(false);
+        })
+        // First Class Function Call
+        function firstClassChange(isIncrease){
+            const firstClassInput = document.getElementById('firstClass-input');
+            const firstCLassCount = parseInt(firstClassInput.value);
+            let firstClassNewCount = firstCLassCount;
+            if(isIncrease == true){
+                firstClassNewCount = firstCLassCount + 1;
+            }
+            if(isIncrease == false && firstCLassCount > 0){
+                firstClassNewCount = firstCLassCount - 1;
+            }
+            firstClassInput.value = firstClassNewCount;
+            calculateTotalAmount();
+        }
+        // Calculate Amount when click Increase and Decrease Button
+        function firstClassSit(){
+            const firstClassInput = document.getElementById('firstClass-input');
+            const firstCLassCount = parseInt(firstClassInput.value);
+            return firstCLassCount;
+        }
+        function economyClassSit(){
+            const economyClassInput = document.getElementById('economyClass-input');
+            const economyClassCount = parseInt(economyClassInput.value);
+            return economyClassCount;
+        }
+        function calculateTotalAmount(){
+            const firstCLassCount = firstClassSit();
+            const economyClassCount = economyClassSit();
+            const subTotalAmount = firstCLassCount*150 + economyClassCount*100;
+            document.getElementById('subtotal-amount').innerText = '$' + subTotalAmount;
+            const vat = Math.round(subTotalAmount*0.1);
+            document.getElementById('vat-amount').innerText = '$' + vat;
+            const totalAmount = subTotalAmount + vat;
+            document.getElementById('total-amount').innerText = '$' + totalAmount;
+            return totalAmount;
+        }
+        // when click the Book Now Button
+        const bookButton = document.getElementById('book-button');
+        bookButton.addEventListener('click', function(){
+            const formArea = document.getElementById("form-area");
+            formArea.style.display = "none";
+            const bookArea = document.getElementById("book-area");
+            bookArea.style.display = "block";
+            const firstClassSitNumber = firstClassSit();
+            document.getElementById('first-sit').innerText = firstClassSitNumber;
+            const economicClassSitNumber = economyClassSit();
+            document.getElementById('economic-sit').innerText = economicClassSitNumber;
+            const totalPayment = calculateTotalAmount();
+            document.getElementById('total-payment').innerText = totalPayment;
+        })
+    </script>
+
+    <!-- End of Assignment JavaScript Code -->
+
+
+
+
+
+
+
+
+    <!-- JavaScript Code Working Code -->
+    <!-- <script>
+        // economyClass Increase Button
+        document.getElementById('economyClass-increase').addEventListener('click', function(){
+            economyClassChange(true);
+            // const economyClassInput = document.getElementById('economyClass-input');
+            // const economyClassCount = parseInt(economyClassInput.value);
+            // const economyClassNewCount = economyClassCount + 1;
+            // economyClassInput.value = economyClassNewCount;
+
+            // economyClassInput.value = economyClassNewCount;
+            // const subTotalAmount = economyClassNewCount * 100;
+            // document.getElementById('subtotal-amount').innerText = '$' + subTotalAmount;
+
+            // calculateTotalAmount();
+        })
+        // economyClass Decrease Button
+        document.getElementById('economyClass-decrease').addEventListener('click', function(){
+            economyClassChange(false);
+            // const economyClassInput = document.getElementById('economyClass-input');
+            // const economyClassCount = parseInt(economyClassInput.value);
+            // const economyClassNewCount = economyClassCount - 1;
+            // economyClassInput.value = economyClassNewCount;
+
+            // economyClassInput.value = economyClassNewCount;
+            // const subTotalAmount = economyClassNewCount * 100;
+            // document.getElementById('subtotal-amount').innerText = '$' + subTotalAmount;
+
+            // calculateTotalAmount();
+        })
+
+        function economyClassChange(isIncrease){
+            const economyClassInput = document.getElementById('economyClass-input');
+            const economyClassCount = parseInt(economyClassInput.value);
+
+            let economyClassNewCount = economyClassCount;
+            if(isIncrease == true){
+                economyClassNewCount = economyClassCount + 1;
+            }
+            if(isIncrease == false && economyClassCount > 0){
+                economyClassNewCount = economyClassCount - 1;
+            }
+
+            economyClassInput.value = economyClassNewCount;
+
+            calculateTotalAmount();
+        }
+
+
+        // firstClass Increase Button
+        document.getElementById('firstClass-increase').addEventListener('click', function(){
+            firstClassChange(true);
+            // const firstClassInput = document.getElementById('firstClass-input');
+            // const firstCLassCount = parseInt(firstClassInput.value);
+            // const firstClassNewCount = firstCLassCount + 1;
+            // firstClassInput.value = firstClassNewCount;
+
+            // firstClassInput.value = firstClassNewCount;
+            // const subTotalAmount = firstClassNewCount * 150;
+            // document.getElementById('subtotal-amount').innerText = '$' + subTotalAmount;
+
+            // calculateTotalAmount();
+        })
+        // firstClass Decrease Button
+        document.getElementById('firstClass-decrease').addEventListener('click', function(){
+            firstClassChange(false);
+            // const firstClassInput = document.getElementById('firstClass-input');
+            // const firstCLassCount = parseInt(firstClassInput.value);
+            // const firstClassNewCount = firstCLassCount - 1;
+            // firstClassInput.value = firstClassNewCount;
+
+            // firstClassInput.value = firstClassNewCount;
+            // const subTotalAmount = firstClassNewCount * 150;
+            // document.getElementById('subtotal-amount').innerText = '$' + subTotalAmount;
+
+            // calculateTotalAmount();
+        })
+
+        function firstClassChange(isIncrease){
+            const firstClassInput = document.getElementById('firstClass-input');
+            const firstCLassCount = parseInt(firstClassInput.value);
+            
+            let firstClassNewCount = firstCLassCount;
+            if(isIncrease == true){
+                firstClassNewCount = firstCLassCount + 1;
+            }
+            if(isIncrease == false && firstCLassCount > 0){
+                firstClassNewCount = firstCLassCount - 1;
+            }
+
+            firstClassInput.value = firstClassNewCount;
+            calculateTotalAmount();
+        }
+
+
+        function calculateTotalAmount(){
+            const firstClassInput = document.getElementById('firstClass-input');
+            const firstCLassCount = parseInt(firstClassInput.value);
+
+            const economyClassInput = document.getElementById('economyClass-input');
+            const economyClassCount = parseInt(economyClassInput.value);
+
+            const subTotalAmount = firstCLassCount*150 + economyClassCount*100;
+            document.getElementById('subtotal-amount').innerText = '$' + subTotalAmount;
+
+            const vat = Math.round(subTotalAmount*0.1);
+            document.getElementById('vat-amount').innerText = '$' + vat;
+
+            const totalAmount = subTotalAmount + vat;
+            document.getElementById('total-amount').innerText = '$' + totalAmount;
+        }
+
+
+        const bookButton = document.getElementById('book-button');
+        bookButton.addEventListener('click', function(){
+            const formArea = document.getElementById("form-area");
+            formArea.style.display = "none";
+            const bookArea = document.getElementById("book-area");
+            bookArea.style.display = "block";
+
+            const totalPayment =  bookButtonClick();
+            document.getElementById('total-payment').innerText = totalPayment;
+        })
+
+
+        function bookButtonClick(){
+            const firstClassInput = document.getElementById('firstClass-input');
+            const firstCLassCount = parseInt(firstClassInput.value);
+
+            const economyClassInput = document.getElementById('economyClass-input');
+            const economyClassCount = parseInt(economyClassInput.value);
+
+            const subTotalAmount = firstCLassCount*150 + economyClassCount*100;
+            
+
+            const vat = Math.round(subTotalAmount*0.1);
+            
+
+            const totalAmount = subTotalAmount + vat;
+            return totalAmount;
+        }
+    </script> 
+    <script>
+        // Economy Class Increase Button
+        document.getElementById('economyClass-increase').addEventListener('click', function(){
+            economyClassChange(true);
+        })
+        // Economy Class Decrease Button
+        document.getElementById('economyClass-decrease').addEventListener('click', function(){
+            economyClassChange(false);
+        })
+        // Economy Class Function Call
+        function economyClassChange(isIncrease){
+            const economyClassInput = document.getElementById('economyClass-input');
+            const economyClassCount = parseInt(economyClassInput.value);
+            let economyClassNewCount = economyClassCount;
+            if(isIncrease == true){
+                economyClassNewCount = economyClassCount + 1;
+            }
+            if(isIncrease == false && economyClassCount > 0){
+                economyClassNewCount = economyClassCount - 1;
+            }
+            economyClassInput.value = economyClassNewCount;
+            calculateTotalAmount();
+        }
+        // First Class Increase Button
+        document.getElementById('firstClass-increase').addEventListener('click', function(){
+            firstClassChange(true);
+           
+        })
+        // First Class Decrease Button
+        document.getElementById('firstClass-decrease').addEventListener('click', function(){
+            firstClassChange(false);
+        })
+        // First Class Function Call
+        function firstClassChange(isIncrease){
+            const firstClassInput = document.getElementById('firstClass-input');
+            const firstCLassCount = parseInt(firstClassInput.value);
+            let firstClassNewCount = firstCLassCount;
+            if(isIncrease == true){
+                firstClassNewCount = firstCLassCount + 1;
+            }
+            if(isIncrease == false && firstCLassCount > 0){
+                firstClassNewCount = firstCLassCount - 1;
+            }
+            firstClassInput.value = firstClassNewCount;
+            calculateTotalAmount();
+        }
+        // Calculate Amount when click Increase and Decrease Button
+        function firstClassSit(){
+            const firstClassInput = document.getElementById('firstClass-input');
+            const firstCLassCount = parseInt(firstClassInput.value);
+            return firstCLassCount;
+        }
+        function economyClassSit(){
+            const economyClassInput = document.getElementById('economyClass-input');
+            const economyClassCount = parseInt(economyClassInput.value);
+            return economyClassCount;
+        }
+        function calculateTotalAmount(){
+            const firstCLassCount = firstClassSit();
+            // const firstClassInput = document.getElementById('firstClass-input');
+            // const firstCLassCount = parseInt(firstClassInput.value);
+            const economyClassCount = economyClassSit();
+            // const economyClassInput = document.getElementById('economyClass-input');
+            // const economyClassCount = parseInt(economyClassInput.value);
+            const subTotalAmount = firstCLassCount*150 + economyClassCount*100;
+            document.getElementById('subtotal-amount').innerText = '$' + subTotalAmount;
+            const vat = Math.round(subTotalAmount*0.1);
+            document.getElementById('vat-amount').innerText = '$' + vat;
+            const totalAmount = subTotalAmount + vat;
+            document.getElementById('total-amount').innerText = '$' + totalAmount;
+
+            return totalAmount;
+        }
+        // when click the Book Now Button
+        const bookButton = document.getElementById('book-button');
+        bookButton.addEventListener('click', function(){
+            const formArea = document.getElementById("form-area");
+            formArea.style.display = "none";
+            const bookArea = document.getElementById("book-area");
+            bookArea.style.display = "block";
+
+            const firstClassSitNumber = firstClassSit();
+            document.getElementById('first-sit').innerText = firstClassSitNumber;
+
+            const economicClassSitNumber = economyClassSit();
+            document.getElementById('economic-sit').innerText = economicClassSitNumber;
+
+            const totalPayment = calculateTotalAmount();
+            // const totalPayment =  bookButtonClick();
+            document.getElementById('total-payment').innerText = totalPayment;
+
+        })
+        // function bookButtonClick(){
+        //     const firstClassInput = document.getElementById('firstClass-input');
+        //     const firstCLassCount = parseInt(firstClassInput.value);
+        //     const economyClassInput = document.getElementById('economyClass-input');
+        //     const economyClassCount = parseInt(economyClassInput.value);
+        //     const subTotalAmount = firstCLassCount*150 + economyClassCount*100;
+        //     const vat = Math.round(subTotalAmount*0.1);
+        //     const totalAmount = subTotalAmount + vat;
+        //     return totalAmount;
+        // }
+        </script>
+-->
+
+</body>
+<footer class="footer">
+    <p>&copy; 2021 SHANTO is All rights reserved.</p>
+</footer>
+</html>
