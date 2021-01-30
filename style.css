@@ -136,7 +136,7 @@ nav ul li a:hover, a.active{
     box-shadow: 10px 10px 10px 20px white;
 }
 .card:hover {
-    box-shadow: 10px 10px 10px 20px red;
+    box-shadow: 10px 10px 10px 20px gray;
 } 
 #book-area{
     display: none;
